@@ -16,9 +16,9 @@ export async function POST(request: NextRequest) {
     let whereClause = 'WHERE 1=1';
 
     if (search) {
-      whereClause += ` AND (url ILIKE $${paramIndex} OR input ILIKE $${paramIndex} OR $${paramIndex + 1} ILIKE ANY(COALESCE(tech, ARRAY[]::text[])))`;
-      params.push(`%${search}%`, `%${search}%`);
-      paramIndex += 2;
+      whereClause += ` AND (url ILIKE $${paramIndex} OR input ILIKE $${paramIndex} OR tech::text ILIKE $${paramIndex})`;
+      params.push(`%${search}%`);
+      paramIndex++;
     }
 
     if (program) {
